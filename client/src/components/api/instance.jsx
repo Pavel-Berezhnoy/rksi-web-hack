@@ -3,7 +3,7 @@ import TokenService from "../tokenService/TokenService";
 
 const instance = axios.create({
   baseURL: process.env.REACT_APP_HOST,
-  timeout: 10000,
+  timeout: 100000,
   headers: {
     'Content-Type': 'Application/json',
   }
@@ -28,8 +28,8 @@ instance.interceptors.response.use(
 async (error) => {
   const config = error.config;
   if (config.url !== "/auth/login" && error.response) {
-    if (error.responce.status === 401 && !config._retry) {
-      error._retry = true;
+    console.log(config._retry);
+    if (error.response.status === 401) {
       try {
         const refresh = await instance.post("auth/refresh", {
           refreshToken: TokenService.getRefreshToken(),

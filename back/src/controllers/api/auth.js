@@ -17,6 +17,7 @@ router.post('/register/:id', async(req, res) => {
 
 router.post('/refresh', async(req, res) => {
     const data = req.body;
+    console.log(data);
     try {
         const result = await AuthService.updateToken(data);
         res.status(200).json(result)
